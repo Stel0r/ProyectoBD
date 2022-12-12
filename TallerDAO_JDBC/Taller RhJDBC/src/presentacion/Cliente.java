@@ -39,6 +39,7 @@ public class Cliente {
     	String[] listaS = new String[] {"F","M"};
     	String[] listaTipoId = new String[] {"TI","CC","CE","NIP"};
     	String[] listaTipoV = new String[] {"A","B","C"};
+    	String[] opcionesBool = new String[] {"SI","NO"};
     	
     	
     	long id = Long.valueOf(JOptionPane.showInputDialog(null, "introduzca su numero de identificacion", "Identificacion", 0));
@@ -56,7 +57,7 @@ public class Cliente {
     	String direccion = JOptionPane.showInputDialog(null,"introduzca su Direccion de residencia", "Direccion", 0);
     	String correo = JOptionPane.showInputDialog(null,"introduzca su Correo", "Correo", 0);
     	String sexo = (String) JOptionPane.showInputDialog(null, "introduzca su Sexo", "Sexo", 0,null, listaS,listaS[0]);
-    	String nSeguridadSocial = JOptionPane.showInputDialog(null,"introduzca su numero de seguridad social", "Seguridad social", 0);
+    	String nSeguridadSocial = (String) JOptionPane.showInputDialog(null,"Tiene usted seguridad social ?", "Seguridad social", 0,null,opcionesBool,opcionesBool[0]);
     	String placaVehiculo = JOptionPane.showInputDialog(null,"introduzca la placa de su vehiculo", "Vehiculo", 0);
     	String tipoVehiculo = (String) JOptionPane.showInputDialog(null, "introduzca la Categoria de su Vehiculo", "Tipo Vehiculo", 0,null, listaTipoV,listaTipoV[0]);
     	String nacionalidad = JOptionPane.showInputDialog(null,"introduzca su Nacionalidad", "Nacionalidad", 0);
