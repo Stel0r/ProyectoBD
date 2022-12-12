@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="TallerDAO_JDBC/Taller RhJDBC/src"/>
+	<classpathentry kind="lib" path="TallerDAO_JDBC/Taller RhJDBC/dist/lib/postgresql-42.2.23.jar"/>
+	<classpathentry kind="lib" path="TallerDAO_JDBC/Taller RhJDBC/dist/RhJDBC.jar"/>
+	<classpathentry kind="lib" path="TallerDAO_JDBC/Taller RhJDBC/lib/postgresql-42.2.23.jar"/>
+	<classpathentry kind="lib" path="TallerDAO_JDBC/Taller RhJDBC/lib/postgresql-9.4.1212.jre6.jar"/>
+	<classpathentry kind="output" path="TallerDAO_JDBC/Taller RhJDBC/build/classes"/>
+</classpath>
