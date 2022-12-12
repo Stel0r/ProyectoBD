@@ -59,6 +59,17 @@ public class VentanaInicial extends JFrame{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+		    	
+		    	
+		    	//crear Horarios para el mensajero
+		    	String[] dias = new String[] {"Lunes a Viernes","Fines de semana"};
+		    	
+		    	String diasHorario = (String) JOptionPane.showInputDialog(null, "introduzca su Sexo", "Sexo", 0,null, dias,dias[0]); 
+		    	String horaInicio = JOptionPane.showInputDialog(null,"introduzca la hora de inicio de su turno", "Hora inicio", 0);
+		    	String horafinal = JOptionPane.showInputDialog(null,"introduzca la hora final de su turno", "Hora inicio", 0);
+		    	//purificar entrada
+		    	
+		    	
 			}
 			
 		});
