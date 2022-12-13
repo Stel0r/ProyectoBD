@@ -79,12 +79,44 @@ public class VentanaInicial extends JFrame{
 		
 		//boton servicios
 		JButton boton1 = new JButton("Servicio");
-		boton.addActionListener(new ActionListener() {
+		boton1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				//accion al presionar servicios
+				ManejoDatos md2 = new ManejoDatos();  
+
+				String[] listaPaquete = new String[] {"PEQUEÑO","MEDIANO","GRANDE"};
+				String[] listaIdavuelta = new String[] {"SI","NO"};
+				String[] listaEstado = new String[] {"H","I","J"};
+				String[] listaTipoId = new String[] {"TI","CC","CE","NIP"};
+				String[] listaCiudades = new String[] {"Bogota", "Manizales"};
+
+				LocalDate fechapedido = LocalDate.now();
+				String tipopedido = (String) JOptionPane.showInputDialog(null, "introduzca el tipo de pedido", "tipo pedido", 0,null, listaPaquete,listaPaquete[0]);
+				String Idavuelta = (String) JOptionPane.showInputDialog(null, "¿Es de ida y vuelta?", "idavuelta", 0,null, listaIdavuelta,listaIdavuelta[0]);
+				String ciudad = (String) JOptionPane.showInputDialog(null, "¿Es de ida y vuelta?", "idavuelta", 0,null, listaCiudades,listaCiudades[0]);
+
+				long DocCliente = Long.valueOf(JOptionPane.showInputDialog(null, "Colocar documento id del cliente","id",0));
+				String tipoIDCliente = (String) JOptionPane.showInputDialog(null, "introduzca el tipo de identificacion", "Identificacion", 0,null, listaTipoId,listaTipoId[0]);
+
+				
+				//agregar indicaciones(almenos dos)
+				
+				//indicacion inicial
+				
+				//si es ida y vuelta agregar la indicacion de volver al origen
+				
+				
+
+				try {
+					md2.crearServicio(fechapedido,null,tipopedido,"P",Idavuelta,ciudad,DocCliente,tipoIDCliente);
+				} catch (RHException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}                
+
+
 			}
 			
 		});

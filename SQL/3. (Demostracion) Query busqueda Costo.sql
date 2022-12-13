@@ -1,0 +1,1 @@
+SELECT t_comision,v_tarifapaquete FROM (SELECT t_comision,v_tarifapaquete,Tarifa.k_codigo,n_tipopaquete,Ciudad.k_codpostal FROM Ciudad_Tarifa,Ciudad,Tarifa WHERE Ciudad_Tarifa.k_codpostal = Ciudad.k_codpostal and Ciudad_Tarifa.k_codigo = Tarifa.k_codigo and n_tipopaquete = 'P' and Ciudad.k_codpostal = 110110)t;

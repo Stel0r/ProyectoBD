@@ -1,6 +1,7 @@
 package negocio;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import datos.MensajeroDAO;
 import datos.ServicioDAO;
@@ -42,9 +43,9 @@ public class ManejoDatos {
 	 public void incluirHorario(Mensajero mensajero, String dias, String HoraI,String HoraF) {
 		 String[] listaDias;
 		 if(dias.equals("Lunes a Viernes")) {
-			 listaDias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes"};
+			 listaDias = new String[] {"MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"};
 		 }else {
-			 listaDias = new String[] {"Sabado","Domingo"};
+			 listaDias = new String[] {"SUNDAY","SATURDAY"};
 		 }
 		 try {
 			mensajeroDAO.incluirHorario(mensajero, listaDias,HoraI,HoraF);
@@ -53,6 +54,31 @@ public class ManejoDatos {
 			e.printStackTrace();
 		}
 	 }
+	 
+	 public void crearServicio(LocalDate fechaServicio, String horaiInicio, 
+             String tipoPaquete, String estado, String idaYvuelta, String Ciudad, 
+             long documentoCliente, String tipoDocumentoCliente) throws RHException{
+         servicio=new Servicio();
+         servicio.setFechaServicio(fechaServicio);
+         servicio.setHoraiInicio(LocalTime.now());
+         servicio.setHoraFinal(null);
+         //manejar tipo paquete
+         if(tipoPaquete.equals("PEQUEÑO")) {
+        	 servicio.setTipoPaquete("P");
+         }else if (tipoPaquete.equals("MEDIANO")) {
+        	 servicio.setTipoPaquete("M");
+         }else {
+        	 servicio.setTipoPaquete("G");
+         }
+         servicio.setEstado(estado);
+         servicio.setIdaYvuelta(idaYvuelta);
+         servicio.setCodigoPostal(servicioDAO.obtenerCodigoPostal(Ciudad));
+         servicio.setCosto(ServicioDAO.obtenerCosto(servicio.getTipoPaquete(),servicio.getCodigoPostal()));
+         servicio.setDocumentoCliente(documentoCliente);
+         servicio.setTipoDocumentoCliente(tipoDocumentoCliente);
+         servicio.setMensajero(mensajeroDAO.obtenerMensajeroServicio());
+         servicioDAO.crearServicio(servicio);
+     }
 
 	public Mensajero getMensajero() {
 		return mensajero;
