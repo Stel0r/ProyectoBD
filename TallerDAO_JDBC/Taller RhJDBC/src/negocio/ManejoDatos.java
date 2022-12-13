@@ -38,5 +38,38 @@ public class ManejoDatos {
 	      mensajero.setNacionalidad(nacionalidad);
 	      mensajeroDAO.incluirEmpleado(mensajero);
 	    }
+	 
+	 public void incluirHorario(Mensajero mensajero, String dias, String HoraI,String HoraF) {
+		 String[] listaDias;
+		 if(dias.equals("Lunes a Viernes")) {
+			 listaDias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes"};
+		 }else {
+			 listaDias = new String[] {"Sabado","Domingo"};
+		 }
+		 try {
+			mensajeroDAO.incluirHorario(mensajero, listaDias,HoraI,HoraF);
+		} catch (RHException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
+
+	public Mensajero getMensajero() {
+		return mensajero;
+	}
+
+	public void setMensajero(Mensajero mensajero) {
+		this.mensajero = mensajero;
+	}
+
+	public Servicio getServicio() {
+		return servicio;
+	}
+
+	public void setServicio(Servicio servicio) {
+		this.servicio = servicio;
+	}
+	 
+	 
 
 }

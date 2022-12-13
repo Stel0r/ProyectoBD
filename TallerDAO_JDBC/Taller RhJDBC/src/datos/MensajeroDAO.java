@@ -3,6 +3,8 @@ package datos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 
 import negocio.Empleado;
 import negocio.Mensajero;
@@ -42,5 +44,30 @@ public class MensajeroDAO {
 	      }
 	      
 	    }
+
+	public void incluirHorario(Mensajero mensajero, String[] dias, String horaI, String horaF) throws RHException {
+		for(int i = 0; i< dias.length;i++) {
+			try { 
+				String strSQL = "INSERT INTO Horario VALUES(DEFAULT,?,?,?,?,?)";
+		        Connection conexion = ServiceLocator.getInstance().tomarConexion();
+		        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+		        prepStmt.setString(1,dias[i]);
+		        String[] listaHoraI = horaI.split(":");
+		        prepStmt.setTime(2, Time.valueOf(LocalTime.of(Integer.valueOf(listaHoraI[0]), Integer.valueOf(listaHoraI[1]))));
+		        String[] listaHoraF = horaF.split(":");
+		        prepStmt.setTime(3, Time.valueOf(LocalTime.of(Integer.valueOf(listaHoraF[0]), Integer.valueOf(listaHoraF[1]))));
+		        prepStmt.setLong(4, mensajero.getId());
+		        prepStmt.setString(5, mensajero.getTipoID());
+		        prepStmt.executeUpdate();
+		        prepStmt.close();
+		        ServiceLocator.getInstance().commit(); 
+			} catch (SQLException e) {
+		         ServiceLocator.getInstance().rollback();
+		         throw new RHException( "EmpleadoDAO", "No pudo crear el empleado"+ e.getMessage());
+		    }  finally {
+		       ServiceLocator.getInstance().liberarConexion();
+		    }
+		}
+	}
 
 }

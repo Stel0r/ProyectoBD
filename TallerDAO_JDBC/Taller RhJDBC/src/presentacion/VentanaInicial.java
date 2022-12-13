@@ -65,11 +65,13 @@ public class VentanaInicial extends JFrame{
 		    	String[] dias = new String[] {"Lunes a Viernes","Fines de semana"};
 		    	
 		    	String diasHorario = (String) JOptionPane.showInputDialog(null, "introduzca su Sexo", "Sexo", 0,null, dias,dias[0]); 
-		    	String horaInicio = JOptionPane.showInputDialog(null,"introduzca la hora de inicio de su turno", "Hora inicio", 0);
-		    	String horafinal = JOptionPane.showInputDialog(null,"introduzca la hora final de su turno", "Hora inicio", 0);
+		    	String horaInicio = JOptionPane.showInputDialog(null,"introduzca la hora de inicio de su turno (HH:MM)", "Hora inicio", 0);
+		    	String horafinal = JOptionPane.showInputDialog(null,"introduzca la hora final de su turno (HH:MM)", "Hora inicio", 0);
+		    	
 		    	//purificar entrada
 		    	
-		    	
+		    	//agregar los registros a la tabla de Horario
+		    	md.incluirHorario(md.getMensajero(), diasHorario, horaInicio, horafinal);
 			}
 			
 		});
