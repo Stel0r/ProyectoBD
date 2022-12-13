@@ -19,9 +19,9 @@ import util.RHException;
 public class VentanaInicial extends JFrame{
 	
 	public VentanaInicial() {
-		this.setSize(500,200);
+		this.setSize(350,100);
 		this.setLayout(new FlowLayout());
-		JButton boton = new JButton("Mensajeros");
+		JButton boton = new JButton("Crear Mensajero");
 		boton.addActionListener(new ActionListener() {
 
 			@Override
@@ -66,9 +66,9 @@ public class VentanaInicial extends JFrame{
 		    	//crear Horarios para el mensajero
 		    	String[] dias = new String[] {"Lunes a Viernes","Fines de semana"};
 		    	
-		    	String diasHorario = (String) JOptionPane.showInputDialog(null, "introduzca su Sexo", "Sexo", 0,null, dias,dias[0]); 
+		    	String diasHorario = (String) JOptionPane.showInputDialog(null, "Introduzca sus dias de trabajo", "Horario", 0,null, dias,dias[0]); 
 		    	String horaInicio = JOptionPane.showInputDialog(null,"introduzca la hora de inicio de su turno (HH:MM)", "Hora inicio", 0);
-		    	String horafinal = JOptionPane.showInputDialog(null,"introduzca la hora final de su turno (HH:MM)", "Hora inicio", 0);
+		    	String horafinal = JOptionPane.showInputDialog(null,"introduzca la hora final de su turno (HH:MM)", "Hora Final", 0);
 		    	
 		    	//purificar entrada
 		    	
@@ -80,7 +80,7 @@ public class VentanaInicial extends JFrame{
 		this.add(boton);
 		
 		//boton servicios
-		JButton boton1 = new JButton("Servicio");
+		JButton boton1 = new JButton("Crear Servicio");
 		boton1.addActionListener(new ActionListener() {
 
 			@Override
@@ -90,17 +90,16 @@ public class VentanaInicial extends JFrame{
 
 				String[] listaPaquete = new String[] {"PEQUEÑO","MEDIANO","GRANDE"};
 				String[] listaIdavuelta = new String[] {"SI","NO"};
-				String[] listaEstado = new String[] {"H","I","J"};
 				String[] listaTipoId = new String[] {"TI","CC","CE","NIP"};
 				String[] listaCiudades = new String[] {"Bogota", "Tunja"};
 
 				LocalDate fechapedido = LocalDate.now();
 				String tipopedido = (String) JOptionPane.showInputDialog(null, "introduzca el tipo de pedido", "tipo pedido", 0,null, listaPaquete,listaPaquete[0]);
 				String Idavuelta = (String) JOptionPane.showInputDialog(null, "¿Es de ida y vuelta?", "idavuelta", 0,null, listaIdavuelta,listaIdavuelta[0]);
-				String ciudad = (String) JOptionPane.showInputDialog(null, "¿Es de ida y vuelta?", "idavuelta", 0,null, listaCiudades,listaCiudades[0]);
+				String ciudad = (String) JOptionPane.showInputDialog(null, "en que ciudad se realizara el pedido?", "Ciudad", 0,null, listaCiudades,listaCiudades[0]);
 
-				long DocCliente = Long.valueOf(JOptionPane.showInputDialog(null, "Colocar documento id del cliente","id",0));
-				String tipoIDCliente = (String) JOptionPane.showInputDialog(null, "introduzca el tipo de identificacion", "Identificacion", 0,null, listaTipoId,listaTipoId[0]);
+				long DocCliente = Long.valueOf(JOptionPane.showInputDialog(null, "Introduzca su documento","id",0));
+				String tipoIDCliente = (String) JOptionPane.showInputDialog(null, "introduzca el tipo de Documento de identificacion", "Identificacion", 0,null, listaTipoId,listaTipoId[0]);
 
 				
 				//agregar indicaciones(almenos dos)
