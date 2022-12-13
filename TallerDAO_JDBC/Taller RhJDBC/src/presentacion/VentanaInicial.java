@@ -5,12 +5,14 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicSplitPaneUI.BasicHorizontalLayoutManager;
 
+import negocio.Indicacion;
 import negocio.ManejoDatos;
 import util.RHException;
 
@@ -90,7 +92,7 @@ public class VentanaInicial extends JFrame{
 				String[] listaIdavuelta = new String[] {"SI","NO"};
 				String[] listaEstado = new String[] {"H","I","J"};
 				String[] listaTipoId = new String[] {"TI","CC","CE","NIP"};
-				String[] listaCiudades = new String[] {"Bogota", "Manizales"};
+				String[] listaCiudades = new String[] {"Bogota", "Tunja"};
 
 				LocalDate fechapedido = LocalDate.now();
 				String tipopedido = (String) JOptionPane.showInputDialog(null, "introduzca el tipo de pedido", "tipo pedido", 0,null, listaPaquete,listaPaquete[0]);
@@ -102,15 +104,39 @@ public class VentanaInicial extends JFrame{
 
 				
 				//agregar indicaciones(almenos dos)
-				
+				ArrayList<Indicacion> indicaciones = new ArrayList<Indicacion>();
+				String desc;
+				String dir;
+				String initDir;
 				//indicacion inicial
+				dir = JOptionPane.showInputDialog(null,"Donde debemos recoger el paquete ?", "Direccion", 0);
+				initDir = dir;
+				indicaciones.add(new Indicacion(dir,"Recoger paquete"));
+				//segunda indicacion
+				dir = JOptionPane.showInputDialog(null,"Donde debe ir el Mensajero?", "Direccion", 0);
+				desc = JOptionPane.showInputDialog(null,"Que debe hacer el Mensajero en "+dir, "Indicacion", 0);
+				indicaciones.add(new Indicacion(dir,desc));
+				//indicaciones extra
+				int extra = JOptionPane.showConfirmDialog(null, "deseas agregar alguna indicacion extra ?","indicaciones Extra",JOptionPane.YES_NO_OPTION);
+				while (extra == 0) {
+					dir = JOptionPane.showInputDialog(null,"Donde debe ir el Mensajero?", "Direccion", 0);
+					desc = JOptionPane.showInputDialog(null,"Que debe hacer el Mensajero en "+dir, "Indicacion", 0);
+					extra = JOptionPane.showConfirmDialog(null, "deseas agregar alguna indicacion extra ?","indicaciones Extra",JOptionPane.YES_NO_OPTION);
+					indicaciones.add(new Indicacion(dir,desc));
+				}
 				
 				//si es ida y vuelta agregar la indicacion de volver al origen
+				
+				if(Idavuelta == "SI") {
+					desc = JOptionPane.showInputDialog(null,"Que debe hacer el Mensajero cuando vuelva a"+initDir, "Indicacion", 0);
+					indicaciones.add(new Indicacion(initDir,desc));
+				}
+				
 				
 				
 
 				try {
-					md2.crearServicio(fechapedido,null,tipopedido,"P",Idavuelta,ciudad,DocCliente,tipoIDCliente);
+					md2.crearServicio(fechapedido,null,tipopedido,"P",Idavuelta,ciudad,DocCliente,tipoIDCliente,indicaciones);
 				} catch (RHException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -5,7 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 
+import negocio.Indicacion;
 import negocio.Servicio;
 import util.RHException;
 import util.ServiceLocator;
@@ -16,9 +19,10 @@ public class ServicioDAO {
 	  
 	   }
 	   public void crearServicio(Servicio servicio) throws RHException {
+		  int idServicio = 0;
 	      try {
 	      
-	        String strSQL = "INSERT INTO Servicio VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,? )";
+	        String strSQL = "INSERT INTO Servicio VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,? ) RETURNING k_idservicio";
 	                //+ "first_name, last_name, job_id, email,salary, hire_date) VALUES(?,?,?,?,?,?,?)";
 	        Connection conexion = ServiceLocator.getInstance().tomarConexion();
 	        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
@@ -34,21 +38,48 @@ public class ServicioDAO {
 	        prepStmt.setString(10, servicio.getTipoDocumentoCliente());
 	        prepStmt.setLong(11, servicio.getDocumentoMensajero());
 	        prepStmt.setString(12, servicio.getTipoDocumentoMensajero());
-	        prepStmt.executeUpdate();
+	        ResultSet result = prepStmt.executeQuery();
+	        result.next();
+	        idServicio = result.getInt(1);
+	        servicio.setId(idServicio);
 	        prepStmt.close();
 	        ServiceLocator.getInstance().commit();
+	        
 	      } catch (SQLException e) {
 	           ServiceLocator.getInstance().rollback();
 	           throw new RHException( "ServicioDAO", "No pudo crear el servicio"+ e.getMessage());
 	      }  finally {
 	         ServiceLocator.getInstance().liberarConexion();
+	         if(idServicio != 0) {
+		         for(int i = 0; i<servicio.getIndicaciones().size();i++) {
+			        	System.out.println("agregando indicaciones");
+			        	agregarIndicacion(servicio.getIndicaciones().get(i),idServicio);
+			     }
+	         }
 	      }
 	      
 	    }
-	       
-	       
-	       
-	       public void modificarServicio(){
+	         
+	    private void agregarIndicacion(Indicacion indicacion,int id) throws RHException {
+	    	try { 
+				String strSQL = "INSERT INTO Indicación VALUES(DEFAULT,?,?,?)";
+		        Connection conexion = ServiceLocator.getInstance().tomarConexion();
+		        PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+		        prepStmt.setString(1,indicacion.getDireccion());
+		        prepStmt.setString(2,indicacion.getDescripcion());
+		        prepStmt.setInt(3,id);
+		        prepStmt.executeUpdate();
+		        prepStmt.close();
+		        ServiceLocator.getInstance().commit(); 
+			} catch (SQLException e) {
+		         ServiceLocator.getInstance().rollback();
+		         throw new RHException( "EmpleadoDAO", "No pudo crear el empleado"+ e.getMessage());
+		    }  finally {
+		       ServiceLocator.getInstance().liberarConexion();
+		    }
+	    }
+	    
+		public void modificarServicio(){
 	      //implementar
 	    }
 	    
@@ -123,9 +154,9 @@ public class ServicioDAO {
 	            prepStmt.setInt(2, codPostal);
 	            ResultSet result = prepStmt.executeQuery();
 	            if(result.next()) {
-	            	BigDecimal valorTarifa = result.getBigDecimal(1);
-	            	BigDecimal valorComision = result.getBigDecimal(2);
-	            	return valorTarifa.add(valorTarifa.multiply(valorComision));
+	            	Double valorTarifa = result.getBigDecimal(2).doubleValue();
+	            	Double valorComision = result.getBigDecimal(1).doubleValue();
+	            	return BigDecimal.valueOf(valorTarifa + (valorTarifa*(valorComision/100)));
 	            }else {
 	            	return BigDecimal.valueOf(-1);
 	            }

@@ -10,7 +10,7 @@ import java.util.Date;
 public class Servicio {
 	
 	private Mensajero mensajero;
-	private long id;
+	private int id;
 	private LocalDate fechaServicio;
 	private ArrayList<Indicacion> indicaciones;
 	private LocalTime horaiInicio;
@@ -27,10 +27,22 @@ public class Servicio {
         indicaciones = new ArrayList<Indicacion>();
     }
 
+    
         
-        
-        
-    public ArrayList<Indicacion> getIndicaciones() {
+    public String getIdaYvuelta() {
+		return idaYvuelta;
+	}
+
+
+
+	public void setIndicaciones(ArrayList<Indicacion> indicaciones) {
+		this.indicaciones = indicaciones;
+	}
+
+
+
+
+	public ArrayList<Indicacion> getIndicaciones() {
 		return indicaciones;
 	}
 
@@ -39,7 +51,7 @@ public class Servicio {
         return mensajero;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
     
@@ -99,7 +111,7 @@ public class Servicio {
         this.mensajero = mensajero;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

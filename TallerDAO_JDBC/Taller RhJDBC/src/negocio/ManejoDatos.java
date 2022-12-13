@@ -2,6 +2,9 @@ package negocio;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import datos.MensajeroDAO;
 import datos.ServicioDAO;
@@ -57,7 +60,7 @@ public class ManejoDatos {
 	 
 	 public void crearServicio(LocalDate fechaServicio, String horaiInicio, 
              String tipoPaquete, String estado, String idaYvuelta, String Ciudad, 
-             long documentoCliente, String tipoDocumentoCliente) throws RHException{
+             long documentoCliente, String tipoDocumentoCliente,ArrayList<Indicacion> indiaciones) throws RHException{
          servicio=new Servicio();
          servicio.setFechaServicio(fechaServicio);
          servicio.setHoraiInicio(LocalTime.now());
@@ -77,7 +80,9 @@ public class ManejoDatos {
          servicio.setDocumentoCliente(documentoCliente);
          servicio.setTipoDocumentoCliente(tipoDocumentoCliente);
          servicio.setMensajero(mensajeroDAO.obtenerMensajeroServicio());
+         servicio.setIndicaciones(indiaciones);
          servicioDAO.crearServicio(servicio);
+         JOptionPane.showMessageDialog(null, "Su pedido se ha creado con el numero de rastreo "+servicio.getId()+" y lo realizara el Mensajero "+servicio.getMensajero().getNombres()+" Y tendra un costo total de $"+servicio.getCosto());
      }
 
 	public Mensajero getMensajero() {
